@@ -38,11 +38,7 @@ get_k_matrices <- function(x_list, opts) {
     for(j in seq_along(opts$kernels[[i]])) {
       cur_kernels[[j]] <- kernelMatrix(opts$kernels[[i]][[j]], x_list[[i]])
     }
-    if(length(cur_kernels) == 1) {
-      k_list[[i]] <- cur_kernels[[1]]
-    } else {
-      k_list[[i]] <- cur_kernels
-    }
+    k_list[[i]] <- cur_kernels
   }
   k_list
 }

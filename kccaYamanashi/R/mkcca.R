@@ -63,10 +63,12 @@ mkcca_eigen_b <- function(k_list, opts) {
 #' referenced paper.
 #' @references "Extracting of correlated gene clusters from multiple genomic
 #' data by generalized kernel canonical correlation analysis."
+#' @importFrom magrittr %>%
 #' @export
 mkcca <- function(x_list, opts) {
   opts <- merge_kernel_opts(opts, p)
-  k_list <- get_k_matrices(x_list, opts)
+  k_list <- get_k_matrices(x_list, opts) %>%
+    lapply(function(x) x[[1]])
   A <- mkcca_eigen_a(k_list, opts)
   B <- mkcca_eigen_b(k_list, opts)
   eigen(solve(B) %*% A)
