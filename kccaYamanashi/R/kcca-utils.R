@@ -14,7 +14,7 @@
 #' defaults.
 #' @importFrom kernlab rbfdot
 #' @export
-merge_kernel_opts <- function(opts = list(), p) {
+merge_kernel_opts <- function(opts = list(), p = 1) {
   default_opts <- list()
   default_opts$kernels <- replicate(p, list(rbfdot(1)), simplify = F)
   default_opts$lambdas <- rep(1, p)
