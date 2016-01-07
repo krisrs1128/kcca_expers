@@ -8,8 +8,9 @@ method}
 mkcca_eigen_a(k_list, opts)
 }
 \arguments{
-\item{k_list}{A list whose i^th element is the n x n kernel matrix associated
-with the i^th data set.}
+\item{k_list}{A list whose i^th element is a list of  n x n kernel matrices
+associated with the i^th data set. For mkcca, only the first kernel matrix
+for each data set will be used.}
 
 \item{opts}{A list of options specifying how to perform the kcca. See
 merge_kernel_opts.}

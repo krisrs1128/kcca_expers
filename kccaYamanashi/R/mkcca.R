@@ -7,8 +7,9 @@
 
 #' @title Get the left hand side matrix in equation (16) of Yamanashi's kcca
 #' method
-#' @param k_list A list whose i^th element is the n x n kernel matrix associated
-#' with the i^th data set.
+#' @param k_list A list whose i^th element is a list of  n x n kernel matrices
+#' associated with the i^th data set. For mkcca, only the first kernel matrix
+#' for each data set will be used.
 #' @param opts A list of options specifying how to perform the kcca. See
 #' merge_kernel_opts.
 #' @return The the left hand side matrix in equation (16) of Yamanashi's kcca
@@ -33,8 +34,9 @@ mkcca_eigen_a <- function(k_list, opts) {
 
 #' @title Get the right hand side matrix in equation (16) of
 #' Yamanashi's kcca method
-#' @param k_list A list whose i^th element is the n x n kernel matrix associated
-#' with the i^th data set.
+#' @param k_list A list whose i^th element is a list of  n x n kernel matrices
+#' associated with the i^th data set. For mkcca, only the first kernel matrix
+#' for each data set will be used.
 #' @param opts A list of options specifying how to perform the kcca. See
 #' merge_kernel_opts.
 #' @return The the right hand side matrix in equation (16) of Yamanashi's kcca
@@ -55,8 +57,9 @@ mkcca_eigen_b <- function(k_list, opts) {
 }
 
 #' @title Perform Yamanashi's multiple kernel canonical correlation analysis
-#' @param k_list A list whose i^th element is the n x n kernel matrix associated
-#' with the i^th data set
+#' @param k_list A list whose i^th element is a list of  n x n kernel matrices
+#' associated with the i^th data set. For mkcca, only the first kernel matrix
+#' for each data set will be used.
 #' @param opts A list of options specifying how to perform the kcca. See
 #' merge_kernel_opts.
 #' @return The eigenvalues and eigenvectors for the eigenproblem (16) in the
