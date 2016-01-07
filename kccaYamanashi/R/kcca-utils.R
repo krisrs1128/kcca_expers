@@ -16,7 +16,7 @@
 #' @export
 merge_kernel_opts <- function(opts = list(), p) {
   default_opts <- list()
-  default_opts$kernels <- replicate(p, rbfdot(1), simplify = F)
+  default_opts$kernels <- replicate(p, list(rbfdot(1)), simplify = F)
   default_opts$lambdas <- rep(1, p)
   modifyList(default_opts, opts)
 }
@@ -34,7 +34,15 @@ get_k_matrices <- function(x_list, opts) {
   p <- length(x_list)
   k_list <- vector(length = p, mode = "list")
   for(i in seq_along(k_list)) {
-    k_list[[i]] <- kernelMatrix(opts$kernels[[i]], x_list[[i]])
+    cur_kernels <- vector(length = length(opts$kernels[[i]]), mode = "list")
+    for(j in seq_along(opts$kernels[[i]])) {
+      cur_kernels[[j]] <- kernelMatrix(opts$kernels[[i]][[j]], x_list[[i]])
+    }
+    if(length(cur_kernels) == 1) {
+      k_list[[i]] <- cur_kernels[[1]]
+    } else {
+      k_list[[i]] <- cur_kernels
+    }
   }
   k_list
 }
