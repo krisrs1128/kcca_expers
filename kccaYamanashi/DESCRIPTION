@@ -1,8 +1,8 @@
 Package: kccaYamanashi
-Title: What the Package Does (one line, title case)
+Title: Implement the kernel cca approaches in Yamanashi / Vert / Kanehisa
 Version: 0.0.0.9000
-Authors@R: person("First", "Last", email = "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R: person("Kris", "Sankaran", email = "kriss1@stanford.edu", role = c("aut", "cre"))
+Description: This implements the multiple and integrated KCCA's in "Extraction of correlated gene clusters from multiple genomic data by generalized kernel canonical correlation analysis"
 Depends: R (>= 3.2.1)
 License: What license is it under?
 LazyData: true
