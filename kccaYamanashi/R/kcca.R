@@ -21,16 +21,16 @@ kcca_eigen_a <- function(k_list, opts) {
   n <- nrow(k_list[[1]])
   p <- length(k_list)
 
-  # A in eigenproblem Av = mu * B * v
+  # A in eigenproblem Av = mu * Bv
   A <- matrix(0, n * p, n * p)
   for(i in seq_len(p)) {
     cur_i_ix <- (n * (i - 1) + 1) : (n * i)
-    for(j in seq_len(i - 1)) {
+    for(j in seq_len(p)) {
       cur_j_ix <- (n * (j - 1) + 1) : (n * j)
-      A[cur_i_ix, cur_j_ix] <- k_list[[i]] * k_list[[j]]
+      A[cur_i_ix, cur_j_ix] <- k_list[[i]] %*% k_list[[j]]
     }
   }
-  A + t(A)
+  A
 }
 
 #' @title Get the right hand side matrix in equations (16 / 18) of
@@ -80,6 +80,7 @@ kcca_eigen_b <- function(k_list, opts) {
 #' @references "Extracting of correlated gene clusters from multiple genomic
 #' data by generalized kernel canonical correlation analysis."
 #' @importFrom magrittr %>%
+#' @importFrom geigen geigen
 #' @examples
 #' # integrated kcca
 #' x_list <- replicate(2, matrix(rnorm(100), 10, 10), simplify = F)
@@ -95,8 +96,17 @@ kcca_eigen_b <- function(k_list, opts) {
 kcca <- function(x_list, opts) {
   opts <- merge_kernel_opts(opts, length(x_list))
   k_list <- get_k_matrices(x_list, opts)
-  k_list_sums <- lapply(k_list, function(k) { Reduce("+", k) })
+  k_list_sums <- lapply(k_list, function(k) { center_mat(Reduce("+", k)) })
   A <- kcca_eigen_a(k_list_sums, opts)
   B <- kcca_eigen_b(k_list_sums, opts)
-  eigen(solve(B) %*% A)
+  geigen(A, B)
 }
+
+
+
+
+
+
+
+
+
