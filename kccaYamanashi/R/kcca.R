@@ -99,14 +99,28 @@ kcca <- function(x_list, opts) {
   k_list_sums <- lapply(k_list, function(k) { center_mat(Reduce("+", k)) })
   A <- kcca_eigen_a(k_list_sums, opts)
   B <- kcca_eigen_b(k_list_sums, opts)
-  geigen(A, B)
+  eigen_res <- geigen(A, B)
+  postprocess_res(eigen_res, k_list_sums)
 }
 
+#' @title Extract KCCA Scores
+#' @param eigen_res The result of a call to geigen
+#' @param k_list A list whose i^th element is a list of  n x n kernel matrices
+#' @return A list with the following elements,
+#'   $scores: A list whose i^th element is a matrix of scores for the i^th table. \cr
+#'   $values: The eigenvalues of the problem, in descending order. \cr
+#'   $vectors: The eigenvectors of the KCCA problem (not directly interpretable) \cr
+#' @export
+postprocess_res <- function(eigen_res, k_list) {
+  n <- nrow(k_list[[1]])
+  p <- length(k_list)
+  scores <- vector(length = p, mode = "list")
+  eigen_res$values <- rev(eigen_res$values)
+  eigen_res$vectors <- eigen_res$vectors[, (n * p):1]
 
-
-
-
-
-
-
-
+  for(i in seq_len(p)) {
+    cur_ix <- (n * (i - 1) + 1) : (n * i)
+    scores[[i]] <-  k_list[[i]] %*% eigen_res$vectors[cur_ix, ]
+  }
+  list(scores = scores, values = eigen_res$values, vectors = eigen_res$vectors)
+}
