@@ -29,6 +29,7 @@ merge_kernel_opts <- function(opts = list(), p = 1) {
 #' @return A list whose i^th element is the n x n kernel matrix associated with
 #' the i^th data set.
 #' @importFrom kernlab kernelMatrix
+#' @importFrom magrittr %>%
 #' @export
 get_k_matrices <- function(x_list, opts) {
   p <- length(x_list)
@@ -43,3 +44,12 @@ get_k_matrices <- function(x_list, opts) {
   k_list
 }
 
+#' @title Row and column center a matrix
+#' @param X The matrix to center
+#' @return (I - 11^T/n) %*% X %*% (I - 11^T/n)
+#' @export
+center_mat <- function(X) {
+  n <- nrow(X)
+  N0 <- diag(n) - 1 / n * matrix(1, n, n)
+  N0 %*% X %*% N0
+}
