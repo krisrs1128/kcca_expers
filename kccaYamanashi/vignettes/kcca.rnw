@@ -225,9 +225,48 @@ with bandwidth 3, and the second uses a linear kernel.
 <<run-kcca>>=
 @
 
-The results are shown in Figures \ref{} to \ref{}.
+The results are shown below.
 
+\begin{figure}
+<<eigenvals>>=
+@
+\caption{Top eigenvalues from the KCCA generalized eigenvalue problem.}
+\label{fig:top_evals}
+\end{figure}
 
+\begin{figure}
+<<kcca-scores>>=
+@
+\caption{These are the scores from KCCA. Notice that the points
+  are sorted by the $\theta_{i}$ (this is not particularly surprising,
+  see the PCA comparison later).}
+\label{fig:kcca_scores}
+\end{figure}
 
+\begin{figure}
+<<correlation-scores>>=
+@
+\caption{There's essentially perfect correlation between the top
+  scores in the two tables. That is,
+  $Cor\left(\Phi\left(x\right)^{T}u, \Phi\left(x\right)^{T}v\right)
+  \approx 1$ for the top canonical correlation directions $u$ and
+  $v$.}
+\label{fig:kcca_corrs}
+\end{figure}
+
+\begin{figure}
+<<top-eigen>>=
+@
+\caption{The top eigenvector distinguishes between small and large
+  values of $\theta_{i}$.}
+\label{fig:topevec}
+\end{figure}
+
+\begin{figure}
+<<second-eigen>>=
+\caption{I'm not sure what the second eigenvector is doing...}
+@
+\label{fig:second_evec}
+\end{figure}
 
 \end{document}

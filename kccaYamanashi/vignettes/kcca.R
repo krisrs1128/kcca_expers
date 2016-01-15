@@ -35,25 +35,29 @@ sigma <- 3
 kernels <- list(list(rbfdot(sigma)), list(vanilladot()))
 kcca_res <- kccaYamanashi::kcca(list(f, theta), list(kernels = kernels))
 
-## ---- vis-results ----
+## ---- eivenvals ----
 ggplot(data.frame(ix = 1:10, lambda = kcca_res$values[1:10])) +
   geom_bar(aes(x = ix, y = lambda), stat = "identity") +
   ggtitle("top eigenvalues")
 
+## ---- kcca-scores ----
 u <- kcca_res$scores[[2]][, 1:2]
 ggplot(data.frame(theta = theta[, 1], u = u)) +
   geom_point(aes(x = u.1, y = u.2, col = theta)) +
   ggtitle("kcca scores")
 
+## ---- correlation-scores ----
 ggplot(data.frame(theta = theta[, 1], ux = u[1:n], uy = u[(n + 1):(2 * n)])) +
   geom_point(aes(x = ux, y = uy)) +
   ggtitle("Correlation between two table scores")
 
+## ---- top-eigen ----
 v <- kcca_res$vectors[, 1]
 ggplot(data.frame(ix = 1:length(v), v, theta = theta[, 1])) +
   geom_point(aes(x = ix, y = v, col = theta)) +
   ggtitle("top eigenvector")
 
+## ---- second-eigen ----
 v <- kcca_res$vectors[, 2]
 ggplot(data.frame(ix = 1:length(v), v, theta = theta[, 1])) +
   geom_point(aes(x = ix, y = v, col = theta)) +
