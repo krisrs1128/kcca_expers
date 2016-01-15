@@ -40,7 +40,7 @@ ggplot(data.frame(ix = 1:10, lambda = kcca_res$values[1:10])) +
   geom_bar(aes(x = ix, y = lambda), stat = "identity") +
   ggtitle("top eigenvalues")
 
-## ---- kcca-scores ----
+## ---- kcca-scores-2 ----
 u <- kcca_res$scores[[2]][, 1:2]
 ggplot(data.frame(theta = theta[, 1], u = u)) +
   geom_point(aes(x = u.1, y = u.2, col = theta)) +
@@ -63,6 +63,7 @@ ggplot(data.frame(ix = 1:length(v), v, theta = theta[, 1])) +
   geom_point(aes(x = ix, y = v, col = theta)) +
   ggtitle("second eigenvector")
 
+## ---- pca-approach ----
 pca_res <- svd(f)
 pca_res <- pca_res$u %*% diag(pca_res$d)
 ggplot(data.frame(pca_res = pca_res, theta = theta[, 1])) +

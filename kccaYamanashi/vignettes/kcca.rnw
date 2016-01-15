@@ -237,9 +237,10 @@ The results are shown below.
 \begin{figure}
 <<kcca-scores>>=
 @
-\caption{These are the scores from KCCA. Notice that the points
-  are sorted by the $\theta_{i}$ (this is not particularly surprising,
-  see the PCA comparison later).}
+\caption{These are the KCCA scores from second table. Notice that the
+  points are sorted by the $\theta_{i}$ (this is not particularly
+  surprising, see the PCA comparison later). The KCCA scores from the
+  first table are essentially the same, see the next figure.}
 \label{fig:kcca_scores}
 \end{figure}
 
@@ -267,6 +268,17 @@ The results are shown below.
 \caption{I'm not sure what the second eigenvector is doing...}
 @
 \label{fig:second_evec}
+\end{figure}
+
+Now, just as a reference, note that we get essentially the same
+results doing ordinary PCA; this example wasn't well chosen showcase
+the benefits of using kernel methods.
+
+\begin{figure}
+<<pca-approach>>=
+@
+\caption{PCA is also able to order the points by their $\theta_{i}$ value.}
+\label{fig:pca}
 \end{figure}
 
 \end{document}
