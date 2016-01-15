@@ -5,8 +5,8 @@
 
 ## ---- libraries ----
 library("ggplot2")
-library("kccaYamanashi")
 library("kernlab")
+library("kccaYamanashi")
 library("reshape2")
 
 ## ---- simulate-data ----
@@ -14,8 +14,10 @@ n <- 40
 C <- sapply(1:2, function(x) sample(0:1, n, replace = T))
 theta <- C + matrix(runif(n * 2, 0, 1), n, 2)
 theta <- theta / rowSums(theta)
+theta <- rbeta(n, 2, 2)
+theta <- cbind(theta, 1 - theta)
 
-p <- 100
+p <- 1000
 x <- seq(-4, 4, length.out = p)
 g <- list(dnorm(x, -1), dnorm(x, 1))
 
@@ -31,7 +33,7 @@ ggplot(mf) +
 ## ---- run-kcca ----
 sigma <- 3
 kernels <- list(list(rbfdot(sigma)), list(vanilladot()))
-kcca_res <- kcca(list(f, theta), list(kernels = kernels))
+kcca_res <- kccaYamanashi::kcca(list(f, theta), list(kernels = kernels))
 
 ## ---- vis-results ----
 ggplot(data.frame(ix = 1:10, lambda = kcca_res$values[1:10])) +
@@ -57,3 +59,7 @@ ggplot(data.frame(ix = 1:length(v), v, theta = theta[, 1])) +
   geom_point(aes(x = ix, y = v, col = theta)) +
   ggtitle("second eigenvector")
 
+pca_res <- svd(f)
+pca_res <- pca_res$u %*% diag(pca_res$d)
+ggplot(data.frame(pca_res = pca_res, theta = theta[, 1])) +
+  geom_point(aes(x = pca_res.1, y = pca_res.2, col = theta))
