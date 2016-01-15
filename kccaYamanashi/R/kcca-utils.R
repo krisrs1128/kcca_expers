@@ -16,9 +16,12 @@
 #' @export
 merge_kernel_opts <- function(opts = list(), p = 1) {
   default_opts <- list()
-  default_opts$kernels <- replicate(p, list(rbfdot(1)), simplify = F)
   default_opts$lambdas <- rep(1, p)
-  modifyList(opts, default_opts)
+  opts <- modifyList(default_opts, opts)
+  if(is.null(opts$kernels)) {
+    opts$kernsl <- replicate(p, list(rbfdot(1)), simplify = F)
+  }
+  opts
 }
 
 #' @title Get the kernel matrices associated with each table.
