@@ -193,7 +193,41 @@ read_chunk("kcca.R")
 
 \section{Application}
 
-<<>>=
+\subsection{Toy Example}
+
+Here's a toy example where the data are curves -- each sample is the
+density function of a mixture of normals. That is, we suppose
+$f_{i}\left(x\right) \overset{iid}{\sim} \theta_{i}\varphi\left(x -
+  1\right) + \left(1 - \theta_{i}\right)\varphi\left(x + 1\right)$, where the
+$\theta_{i}\overset{iid}{\sim} \Bet\left(2, 2\right)$ are  and
+$\varphi$ is the standard normal density. This is shown in figure \ref{fig:toy_data}.
+
+<<libraries>>=
 @
+
+<<simulate-data>>=
+@
+
+\begin{figure}
+<<vis-simulated-data>>=
+@
+\caption{Toy data -- each sample is like the density for a mixture of normals.}
+\label{fig:toy_data}
+\end{figure}
+
+Let $x_{i}$ be a length $p$ evenly spaced grid from -4 to 4, and
+define a matrix $F$ by $F_{ij} = f_{i}\left(x_{j}\right)$. We do a
+KCCA between the $F \in \reals^{n \times p}$ and $\Theta :=
+\left[\theta \vert 2 - \theta\right] \in \reals^{n \times 2}$
+matrices. The first table, corresponding to $F$, uses an RBF kernel
+with bandwidth 3, and the second uses a linear kernel.
+
+<<run-kcca>>=
+@
+
+The results are shown in Figures \ref{} to \ref{}.
+
+
+
 
 \end{document}
